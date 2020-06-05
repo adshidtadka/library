@@ -56,6 +56,8 @@ typedef long long LL;
 //--------------------------------------------
 const double EPS = 1e-10;
 const double PI = acos(-1.0);
+const int INF_INT =  2147483647;
+const LL INF_LL = 9223372036854775807;
 
 // clear memory
 //--------------------------------------------
