@@ -1,21 +1,39 @@
-// UnionFind
-// coding: https://youtu.be/TdR816rqc3s?t=726
-// comment: https://youtu.be/TdR816rqc3s?t=6822
-struct UnionFind {
-  vector<int> d;
-  UnionFind(int n=0): d(n,-1) {}
-  int find(int x) {
-    if (d[x] < 0) return x;
-    return d[x] = find(d[x]);
-  }
-  bool unite(int x, int y) {
-    x = find(x); y = find(y);
-    if (x == y) return false;
-    if (d[x] > d[y]) swap(x,y);
-    d[x] += d[y];
-    d[y] = x;
-    return true;
-  }
-  bool same(int x, int y) { return find(x) == find(y);}
-  int size(int x) { return -d[find(x)];}
+class DisjointSet {
+public:
+    VI rank, p;
+
+    DisjointSet() {}
+    DisjointSet(int size) {
+        rank.resize(size, 0);
+        p.resize(size, 0);
+        REP(i, size) p[i] = i;
+    }
+
+    void makeSet(int x) {
+        p[x] = x;
+        rank[x] = 0;
+    }
+
+    bool same(int x, int y) { return _findSet(x) == _findSet(y); }
+
+    void unite(int x, int y) { _link(_findSet(x), _findSet(y)); }
+
+private:
+    void _link(int x, int y) {
+        if (rank[x] > rank[y]) {
+            p[y] = x;
+        } else {
+            p[x] = y;
+            if (rank[x] == rank[y]) {
+                rank[y]++;
+            }
+        }
+    }
+
+    int _findSet(int x) {
+        if (x != p[x]) {
+            p[x] = _findSet(p[x]);
+        }
+        return p[x];
+    }
 };
